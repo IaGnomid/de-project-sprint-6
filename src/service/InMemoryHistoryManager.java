@@ -74,10 +74,6 @@ public class InMemoryHistoryManager implements HistoryManager {
             }
         }
 
-        public void checkHistory(Task task) {
-
-        }
-
         public void removeNode(Node<Task> key) {
             if (key != null) {
                 if (key == head) {
