@@ -5,7 +5,7 @@ import model.Task;
 import java.util.*;
 
 public class InMemoryHistoryManager implements HistoryManager {
-    private Map<Integer, Node> nodes = new HashMap<>();
+    private Map<Integer, Node<Task>> nodes = new HashMap<>();
     private CustomLinkedList<Task> customLinkedList = new CustomLinkedList<>();
 
     public void add(Task task) {
@@ -28,7 +28,7 @@ public class InMemoryHistoryManager implements HistoryManager {
         customLinkedList.removeNode(nodes.get(id));
     }
 
-    class CustomLinkedList<Task> {
+    private static class CustomLinkedList<Task> {
         private Node<Task> head;
         private Node<Task> tail;
 
@@ -59,6 +59,7 @@ public class InMemoryHistoryManager implements HistoryManager {
         public void removeFirst() {
             if (head.next == null) {
                 head = null;
+                tail = null;
             } else {
                 head.next.prev = null;
                 head = head.next;
@@ -68,6 +69,7 @@ public class InMemoryHistoryManager implements HistoryManager {
         public void removeLast() {
             if (tail.prev == null) {
                 tail = null;
+                head = null;
             } else {
                 tail.prev.next = null;
                 tail = tail.prev;
