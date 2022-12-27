@@ -11,12 +11,16 @@ import java.util.List;
 import java.util.Map;
 
 public class InMemoryTaskManager implements TaskManager {
-    private Map<Integer, Task> tasks = new HashMap<>();
-    private Map<Integer, SubTask> subTasks = new HashMap<>();
-    private Map<Integer, Epic> epics = new HashMap<>();
-    private HistoryManager historyManager = Managers.getDefaultHistory();
+    protected Map<Integer, Task> tasks = new HashMap<>();
+    protected Map<Integer, SubTask> subTasks = new HashMap<>();
+    protected Map<Integer, Epic> epics = new HashMap<>();
+    protected HistoryManager historyManager = (HistoryManager) Managers.getDefaultHistory();
 
     private int id = 1;
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     @Override
     public Integer generatingId() {
@@ -165,12 +169,11 @@ public class InMemoryTaskManager implements TaskManager {
         return subTasksList;
     }
 
-    private void checkStatus(Epic epic) {
+    public void checkStatus(Epic epic) {
         List<Integer> subTasksList = epic.getSubTasks();
         if (!subTasksList.isEmpty()) {
             int countNew = 0;
             int countDone = 0;
-            int countInProgress = 0;
             Task task;
             for (Integer subtaskId : subTasksList) {
                 task = subTasks.get(subtaskId);
@@ -182,7 +185,6 @@ public class InMemoryTaskManager implements TaskManager {
                         countDone++;
                         break;
                     case IN_PROGRESS:
-                        countInProgress++;
                         epic.setStatus(TaskStatus.IN_PROGRESS);
                         return;
                 }

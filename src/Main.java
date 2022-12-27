@@ -5,13 +5,14 @@ import model.SubTask;
 import model.Task;
 import service.InMemoryTaskManager;
 import service.Managers;
+import service.TaskManager;
 
 import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
 
-        InMemoryTaskManager manager = (InMemoryTaskManager) Managers.getDefault();
+        TaskManager manager = Managers.getDefault();
 
         manager.createEpic(new Epic("model.Epic name1", "Description epic1", manager.generatingId()));
         manager.createEpic(new Epic("model.Epic name2", "Description epic2", manager.generatingId()));

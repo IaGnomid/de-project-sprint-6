@@ -6,7 +6,7 @@ import java.util.*;
 
 public class InMemoryHistoryManager implements HistoryManager {
     private Map<Integer, Node<Task>> nodes = new HashMap<>();
-    private CustomLinkedList<Task> customLinkedList = new CustomLinkedList<>();
+    protected CustomLinkedList<Task> customLinkedList = new CustomLinkedList<>();
 
     public void add(Task task) {
         if (task != null) {

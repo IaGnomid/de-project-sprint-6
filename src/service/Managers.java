@@ -3,6 +3,8 @@ package service;
 import service.HistoryManager;
 import service.TaskManager;
 
+import java.nio.file.Paths;
+
 public class Managers {
 
     private Managers() {
@@ -12,7 +14,7 @@ public class Managers {
         return new InMemoryTaskManager();
     }
 
-    public static HistoryManager getDefaultHistory(){
-        return new InMemoryHistoryManager();
+    public static FileBackedTaskManager getDefaultHistory(){
+        return new FileBackedTaskManager(Paths.get("file.csv"));
     }
 }
