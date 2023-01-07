@@ -20,6 +20,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager{
     public FileBackedTaskManager(Path file) {
         this.file = file;
     }
+
 //Восстанавливаем FileBackedTaskManager из файла
     //Если нет файла, создпем новый экземпляр
 public static FileBackedTaskManager loadFromFile(Path file){
@@ -30,10 +31,10 @@ public static FileBackedTaskManager loadFromFile(Path file){
         for (int i = 0; i < list.size(); i++) {
             if(list.get(i) != null) {
                 Task task = converter.fromString(list.get(i));
+                task.getClass().getName();
                 if (task.getId() > generatorId) {
                     generatorId = task.getId();
                 }
-                fileBackedTaskManager.tasks.put();
             }else {
                 converter.historyFromString(list.get(i+1));
                 break;
@@ -49,17 +50,13 @@ public static FileBackedTaskManager loadFromFile(Path file){
     return fileBackedTaskManager;
 }
     public <T extends Task> void save(Map<Integer, T> tasks) {
-        //
         // Записываем в файл - BufferedReader writer
         //writer.write(CSVTaskConverter.getHeader())
         //перевод строки
-
         //Сериализация и запись тасков
         //По очереди проходим каждую мапу с тасками
         //Внутрикаждого for мы сериализуем таску CSVTaskFormater.toString(task)
-
         //Записать новую строку
-        //
         //Сериализуем историю
         //CSVTaskConverter.historyToString()
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("file.csv"))) {
@@ -225,4 +222,11 @@ public static FileBackedTaskManager loadFromFile(Path file){
         }
         save(epics);
     }
+    public static void main(String[] args){
+        FileBackedTaskManager fileBackedTaskManager = new FileBackedTaskManager(Path.of("file.csv"));
+        Epic epic1 = new Epic("epic one", "description epic 1", fileBackedTaskManager.generatingId());
+        Task task1 = new Task("task1", "description task1", fileBackedTaskManager.generatingId());
+        SubTask subTask1 = new SubTask("subtask1", "description subtask1", fileBackedTaskManager.generatingId(), 1);
+    }
+
 }

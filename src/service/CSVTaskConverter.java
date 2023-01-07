@@ -12,6 +12,8 @@ import java.util.*;
 import static service.TaskName.valueOf;
 
 public class CSVTaskConverter {
+
+
     public Task fromString(String value){
         String[] splitTask = value.split(",");
         int idTask = Integer.parseInt(splitTask[0]);
@@ -37,7 +39,6 @@ public class CSVTaskConverter {
             case EPIC:
                 Epic epic = new Epic(nameTask, description, idTask);
                 epic.setStatus(TaskStatus.valueOf(statusTask));
-                fileBackedTaskManager.epics.put(epic);
                 return epic;
         }
         //Напишите метод создания задачи из строки
